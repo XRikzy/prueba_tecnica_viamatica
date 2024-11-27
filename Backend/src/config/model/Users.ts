@@ -1,7 +1,6 @@
 import { Model, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Person } from './Person';
-
-export class User extends Model {
+export class Users extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
