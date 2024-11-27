@@ -1,33 +1,31 @@
-import { Model, Column, DataType } from 'sequelize-typescript';
+import { Model, DataTypes } from "sequelize";
+import { sequelize } from "../database/databaseconfig";
 
 export class Person extends Model {
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  idPerson!: number;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  name!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  lastname!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  indentification!: string;
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  borndate!: string;
+  public idPerson!: number;
+  public firstName!: string;
+  public lastName!: string;
 }
+
+Person.init(
+  {
+    idPerson: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    firstName: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "Person",
+    timestamps: false,
+  }
+);

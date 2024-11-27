@@ -1,43 +1,54 @@
-import { Model, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { Person } from './Person';
+import { Model, DataTypes } from "sequelize";
+import { Person } from "./Person";
+import { sequelize } from "../database/databaseconfig";
 export class Users extends Model {
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  UserName!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  Password!: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  Mail!: string;
-
-  @Column({
-    type: DataType.CHAR(1),
-    allowNull: false,
-  })
-  SessionActive!: string;
-
-  @ForeignKey(() => Person)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  Person_idPerson2!: number;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  Status!: string;
-
-  @BelongsTo(() => Person)
-  person!: Person;
+  public idUser!: number;
+  public UserName!: string;
+  public Password!: string;
+  public Mail!: string;
+  public SessionActive!: string;
+  public Person_idPerson2!: number;
+  public Status!: string;
 }
+
+Users.init(
+  {
+    idUser: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    UserName: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    Password: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    Mail: {
+      type: DataTypes.STRING(120),
+      allowNull: false,
+    },
+    SessionActive: {
+      type: DataTypes.CHAR(1),
+      allowNull: false,
+    },
+    Person_idPerson2: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Person,
+        key: "idPerson",
+      },
+    },
+    Status: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "Users",
+    timestamps: false,
+  }
+);
