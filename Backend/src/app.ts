@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import DatabaseConnection from "./config/database/databaseConnection";
-
+import cors from 'cors'
+import userRoutes from "./interfaces/routes/UsersRoutes";
 
 
 class Server {
@@ -13,10 +14,11 @@ class Server {
     this.port = port;
     this.dbConnection = new DatabaseConnection("usersesions", "ricardo", "ricardo123", "localhost", "postgres");
     this.app.use(express.json());
+    this.app.use(cors())
+    this.app.use('/api', userRoutes)
   }
   private async authenticateDatabase() {
     try {
-      await this.dbConnection.authenticate();
       console.table("✅ 🐘 Database authentication successful 🐘 ✅");
     } catch (error) {
       console.error("Database authentication failed:", error);
