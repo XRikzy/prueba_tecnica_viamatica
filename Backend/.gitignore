@@ -1,0 +1,31 @@
+# Node modules
+/node_modules/
+
+# Build output
+/dist/
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Debug
+.vscode/
+
+# NPM package lock files (if you use Yarn, ignore yarn.lock instead)
+package-lock.json
