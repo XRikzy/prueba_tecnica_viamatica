@@ -1,10 +1,12 @@
+// models/Person.ts
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../database/databaseconfig";
-
 export class Person extends Model {
   public idPerson!: number;
-  public firstName!: string;
-  public lastName!: string;
+  public names!: string;
+  public lastnames!: string;
+  public Identification!: string;
+  public borndate!: Date;
 }
 
 Person.init(
@@ -14,17 +16,26 @@ Person.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    firstName: {
-      type: DataTypes.STRING(50),
+    names: {
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
-    lastName: {
-      type: DataTypes.STRING(50),
+    lastnames: {
+      type: DataTypes.STRING(60),
+      allowNull: false,
+    },
+    Identification: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+    },
+    borndate: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },
   {
     sequelize,
+    modelName: "Person",
     tableName: "Person",
     timestamps: false,
   }

@@ -11,5 +11,9 @@ const dbConnection = new DatabaseConnection(
 );
 
 export const sequelize = dbConnection.getSequelizeInstance();
-
+sequelize.sync().then(() => {
+  console.log('Database synchronized');
+}).catch(err => {
+  console.error('Error syncing database:', err);
+});
 export default dbConnection;
