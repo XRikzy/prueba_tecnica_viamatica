@@ -1,12 +1,13 @@
 import express, { Express } from "express";
-import dbConnection from "./config/database/databaseconfig";
+import dbConnection from "./infrastructure/database/databaseconfig";
 import cors from "cors";
-import userRoutes from "./interfaces/routes/UsersRoutes";
-import personRoutes from "./interfaces/routes/PersonRoutes";
-import rolRoutes from "./interfaces/routes/RolRoutes";
-import rolOptionRoutes from "./interfaces/routes/RolOptionRoutes";
-import rolrolOptionRoutes from "./interfaces/routes/RolRolOptionRoutes";
-import rolUserRoutes from "./interfaces/routes/RolUserRoutes";
+import userRoutes from "./interfaces/routes/user.routes";
+import personRoutes from "./interfaces/routes/person.routes";
+import rolRoutes from "./interfaces/routes/rol.routes";
+import rolOptionRoutes from "./interfaces/routes/roloption.routes";
+import rolrolOptionRoutes from "./interfaces/routes/rolroloption.routes";
+import rolUserRoutes from "./interfaces/routes/roluser.routes";
+import 'reflect-metadata';
 
 class App {
   private app: Express;
