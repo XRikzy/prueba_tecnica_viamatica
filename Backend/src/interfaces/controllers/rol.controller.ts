@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { RolServices } from "../../domain/services/rol.service";
+import { RolService } from "../../domain/services/rol.service";
 
 export class RolControllers {
-    private RolService: RolServices;
-    constructor(RolService: RolServices) {
+    private RolService: RolService;
+    constructor(RolService: RolService) {
         this.RolService = RolService;
       }
   async createRol(req: Request, res: Response) {
@@ -15,18 +15,9 @@ export class RolControllers {
       console.log(error)
     }
   }
-  async createManyRol(req: Request, res: Response) {
-    try {
-      const user = await this.RolService.createManyRol(req.body);
-      res.status(201).json(user);
-    } catch (error) {
-      res.status(500).json({ error: "Error creando a la Rola" });
-      console.log(error)
-    }
-  }
   async getAllRol(req: Request, res: Response) {
     try {
-      const user = await this.RolService.getAllRol();
+      const user = await this.RolService.getAllRols();
       res.status(200).json(user);
     } catch (error) {
       res
@@ -39,8 +30,8 @@ export class RolControllers {
   }
   async getRolByRolName(req: Request, res: Response) {
     try {
-      const user = await this.RolService.getRolByRolName(
-        req.params.rolname
+      const user = await this.RolService.getRol(
+        parseInt(req.params.rolname)
       );
       res.status(200).json(user);
     } catch (error) {
@@ -66,14 +57,9 @@ export class RolControllers {
 
   async deleteRol(req: Request, res: Response) {
     try {
-      const result = await this.RolService.deleteRol(
+       await this.RolService.deleteRol(
         parseInt(req.params.id)
       );
-      if (result) {
-        res.status(200).json({ message: "Rola eliminada" });
-      } else {
-        res.status(404).json({ message: "Rola no encontrado" });
-      }
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la Rola" });
     }

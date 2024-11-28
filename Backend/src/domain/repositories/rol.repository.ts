@@ -6,16 +6,10 @@ export class RolRepository {
   async create(RolData: Partial<Rol>) {
     return await Rol.create(RolData);
   }
-  async createMany(RolData: Partial<Rol>[]) {
-    return await Rol.bulkCreate(RolData);
-  }
-  async getAll() {
+  async findAll() {
     return await Rol.findAll();
   }
-  async getByRolName(names: string) {
-    return await Rol.findOne({ where: { names: names } });
-  }
-  async getById(id: number) {
+  async findById(id: number) {
     return await Rol.findByPk(id);
   }
 

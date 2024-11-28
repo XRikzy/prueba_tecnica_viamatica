@@ -3,7 +3,7 @@ import {sequelize} from '../../infrastructure/database/databaseconfig'; // confi
 import { User } from './user.model';
 
 export class Person extends Model {
-  public id!: number;
+  public idPerson!: number;
   public firstName!: string;
   public lastName!: string;
   public identification!: string;
@@ -13,7 +13,7 @@ export class Person extends Model {
 
 Person.init(
   {
-    id: {
+    idPerson: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -43,6 +43,3 @@ Person.init(
     timestamps: true,
   }
 );
-
-User.hasOne(Person, { foreignKey: 'userId' });
-Person.belongsTo(User, { foreignKey: 'userId' });

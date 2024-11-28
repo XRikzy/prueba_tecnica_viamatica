@@ -1,18 +1,13 @@
 import { Router } from "express";
-import { RolRepository } from "../../domain/repositories/rol.repository";
-import { RolServices } from "../../domain/services/rol.service";
 import { RolControllers } from "../controllers/rol.controller";
+import { RolService } from "../../domain/services/rol.service";
 
 const rolRoutes = Router();
-const rolRepository = new RolRepository();
-const rolService = new RolServices(rolRepository);
+const rolService = new RolService;
 const rolController = new RolControllers(rolService);
 
 rolRoutes.post("/rol", (req, res) =>
   rolController.createRol(req, res)
-);
-rolRoutes.post("/manyrol", (req, res) =>
-  rolController.createManyRol(req, res)
 );
 rolRoutes.get("/rol", (req, res) =>
   rolController.getAllRol(req, res)

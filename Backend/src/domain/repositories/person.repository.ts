@@ -12,9 +12,6 @@ export class PersonRepository {
   async create(person: Partial<Person>): Promise<Person> {
     return Person.create(person);
   }
-  async createMany(personsData: Partial<Person>[]) {
-    return await Person.bulkCreate(personsData);
-  }
   async update(
     id: number,
     person: Partial<Person>

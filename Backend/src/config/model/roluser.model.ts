@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../infrastructure/database/databaseconfig";
 import { Rol } from "./rol.model";
-import { Users } from "./user.model";
+import { User } from "./user.model";
 
 class RolUser extends Model {
   public Rol_idRol!: number;
@@ -21,7 +21,7 @@ RolUser.init(
     user_idUser: {
       type: DataTypes.INTEGER,
       references: {
-        model: Users,
+        model: User,
         key: "idUser",
       },
       primaryKey: true,
@@ -36,7 +36,7 @@ RolUser.init(
 );
 
 // Relaciones
-Rol.belongsToMany(Users, { through: RolUser });
-Users.belongsToMany(Rol, { through: RolUser });
+Rol.belongsToMany(User, { through: RolUser });
+User.belongsToMany(Rol, { through: RolUser });
 
 export { RolUser };

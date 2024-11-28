@@ -1,31 +1,34 @@
-import { Rol } from "../../config/model/rol.model";
+import { CreateRolDTO, UpdateRolDTO } from "../../application/dto/rol.dto";
+import { CreateRolUseCase, DeleteRolUseCase, GetRolUseCase, UpdateRolUseCase } from "../../application/use-cases/Rol";
 import { RolRepository } from "../repositories/rol.repository";
 
-export class RolServices {
-  private RolRepository: RolRepository;
 
-  constructor(RolRepository: RolRepository) {
-    this.RolRepository = RolRepository;
+
+export class RolService {
+  private RolRepository = new RolRepository();
+
+  private createRolUseCase = new CreateRolUseCase(this.RolRepository);
+  private getRolUseCase = new GetRolUseCase(this.RolRepository);
+  private updateRolUseCase = new UpdateRolUseCase(this.RolRepository);
+  private deleteRolUseCase = new DeleteRolUseCase(this.RolRepository);
+
+  async createRol(data: CreateRolDTO) {
+    return this.createRolUseCase.execute(data);
   }
-  async createRol(RolData: Partial<Rol>) {
-    return await this.RolRepository.create(RolData);
+
+  async getRol(id: number) {
+    return this.getRolUseCase.execute(id);
   }
-  async createManyRol(RolData: Partial<Rol>[]) {
-    return await this.RolRepository.createMany(RolData);
+
+  async getAllRols() {
+    return this.getRolUseCase.getAll();
   }
-  async getAllRol() {
-    return await this.RolRepository.getAll();
+
+  async updateRol(id: number, data: UpdateRolDTO) {
+    return this.updateRolUseCase.execute(id, data);
   }
-  async getRolByRolName(RolName: string) {
-    return await this.RolRepository.getByRolName(RolName);
-  }
-  async getRolById(id: number) {
-    return await this.RolRepository.getById(id);
-  }
-  async updateRol(id: number, userData: any) {
-    return await this.RolRepository.update(id, userData);
-  }
+
   async deleteRol(id: number) {
-    return await this.RolRepository.delete(id);
+    return this.deleteRolUseCase.execute(id);
   }
 }
