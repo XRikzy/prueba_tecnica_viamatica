@@ -3,8 +3,12 @@ import dbConnection from "./config/database/databaseconfig";
 import cors from "cors";
 import userRoutes from "./interfaces/routes/UsersRoutes";
 import personRoutes from "./interfaces/routes/PersonRoutes";
+import rolRoutes from "./interfaces/routes/RolRoutes";
+import rolOptionRoutes from "./interfaces/routes/RolOptionRoutes";
+import rolrolOptionRoutes from "./interfaces/routes/RolRolOptionRoutes";
+import rolUserRoutes from "./interfaces/routes/RolUserRoutes";
 
-class Server {
+class App {
   private app: Express;
   private port: string | number;
 
@@ -13,7 +17,7 @@ class Server {
     this.port = port;
     this.app.use(express.json());
     this.app.use(cors());
-    this.app.use("/api", userRoutes, personRoutes);
+    this.app.use("/api", userRoutes, personRoutes, rolRoutes, rolOptionRoutes, rolrolOptionRoutes, rolUserRoutes);
   }
   private async authenticateDatabase() {
     try {
@@ -32,5 +36,5 @@ class Server {
     });
   }
 }
-const server = new Server(process.env.PORT || 3000);
-server.start();
+const app = new App(process.env.PORT || 3000);
+app.start();

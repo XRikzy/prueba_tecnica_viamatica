@@ -12,7 +12,7 @@ export class PersonRepository {
     return await Person.findAll();
   }
   async getByPersonName(names: string) {
-    return await Person.findOne({ where: { names: names } });
+    return await Person.findOne({ where: { names } });
   }
   async getById(id: number) {
     return await Person.findByPk(id);
