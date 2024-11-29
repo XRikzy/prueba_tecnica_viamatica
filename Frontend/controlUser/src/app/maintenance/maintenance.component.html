@@ -1,0 +1,39 @@
+<div class="maintenance-container">
+    <h2>Mantenimiento de Usuario</h2>
+  
+    <!-- Filtros de búsqueda -->
+    <div class="filters">
+      <label for="search">Buscar Usuario:</label>
+      <input type="text" id="search" [(ngModel)]="searchQuery" placeholder="Buscar por nombre o correo">
+      <button (click)="applySearch()">Buscar</button>
+    </div>
+  
+    <!-- Carga masiva de usuarios -->
+    <div class="bulk-upload">
+      <h3>Cargar Usuarios</h3>
+      <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .csv">
+      <button (click)="uploadUsers()">Cargar</button>
+    </div>
+  
+    <!-- Actualización de usuarios -->
+    <div class="user-update-form">
+      <h3>Actualizar Usuario</h3>
+      <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" formControlName="name" [(ngModel)]="users.username" required>
+  
+        <label for="email">Correo:</label>
+        <input type="email" id="email" formControlName="email" [(ngModel)]="users.mail" required>
+  
+        <label for="status">Estado:</label>
+        <select formControlName="status" [(ngModel)]="users.status">
+          <option value="active">Activo</option>
+          <option value="inactive">Inactivo</option>
+          <option value="blocked">Bloqueado</option>
+        </select>
+  
+        <button type="submit" [disabled]="userForm.invalid">Actualizar</button>
+      </form>
+    </div>
+  </div>
+  

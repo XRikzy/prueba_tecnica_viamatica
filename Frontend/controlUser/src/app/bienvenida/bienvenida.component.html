@@ -1,15 +1,20 @@
-<div class="welcome-container">
+<div class="welcome-card">
+  <div class="profile-header">
+    <img src="https://via.placeholder.com/150" alt="User Profile" class="profile-img" />
     <h2>Bienvenido, {{ username }}</h2>
-  
-    <div class="session-info">
-      <h3>Información de la última sesión</h3>
-      <p><strong>Intentos de inicio de sesión fallidos:</strong> {{ loginAttempts }}</p>
-      <p><strong>Hora de inicio de sesión:</strong> {{ sessionStartTime }}</p>
-      <p><strong>Hora de fin de sesión:</strong> {{ sessionEndTime }}</p>
-      <p><strong>Última sesión:</strong> {{ lastSession }}</p>
-    </div>
-  
-    <button (click)="logout()">Cerrar sesión</button>
   </div>
-  
 
+  <div class="session-details">
+    <div>
+      <h3>Información de la última sesión</h3>
+      <p><strong>Fecha de entrada:</strong> {{ entryDate }}</p>
+      <p><strong>Fecha de cierre:</strong> {{ closeDate }}</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-connect">Conectar</button>
+    <button class="btn-message">Mensaje</button>
+    <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>

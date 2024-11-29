@@ -1,6 +1,5 @@
 import { Op } from "sequelize";
 import { User } from "../../config/model/user.model";
-import { UserNotFound } from "../../utils/apperros.utils";
 
 export class UserRepository {
   async findAll(): Promise<User[]> {
@@ -14,8 +13,8 @@ export class UserRepository {
   async create(user: Partial<User>): Promise<User> {
     return User.create(user);
   }
-  async findByUsername(userName: string) {
-    return await User.findOne({ where: { userName } });
+  async findByUsername(username: string) {
+    return await User.findOne({ where: { username } });
   }
   async update(id: number, user: Partial<User>): Promise<[number, User[]]> {
     return User.update(user, { where: { id }, returning: true });
@@ -36,7 +35,7 @@ export class UserRepository {
     });
   }
   async setSessionActive(userId: number, status: 'Y' | 'N'): Promise<void> {
-    await User.update({ sessionActive: status }, { where: { idUser: userId } });
+    await User.update({ SessionActive: status }, { where: { idUser: userId } });
   }
 
   async incrementFailedAttempts(userId: number): Promise<void> {

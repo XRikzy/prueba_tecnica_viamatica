@@ -1,6 +1,5 @@
 import { Sessions } from "../../config/model/sessions.model";
 
-
 export class SessionsRepository {
   async create(SessionsData: Partial<Sessions>) {
     return await Sessions.create(SessionsData);
@@ -11,8 +10,15 @@ export class SessionsRepository {
   async findAll() {
     return await Sessions.findAll();
   }
+  async getCloseSessionByUser(user_idUser: number) {
+    return await Sessions.findOne({
+      where: { user_idUser, CloseDate: null },
+    });
+  }
   async getSessionsByIdUser(user_idUser: number) {
-    return await Sessions.findOne({ where: { user_idUser } });
+    return await Sessions.findOne({
+      where: { user_idUser },
+    });
   }
   async findById(id: number) {
     return await Sessions.findByPk(id);
@@ -39,7 +45,7 @@ export class SessionsRepository {
   async closeSession(userId: number): Promise<void> {
     const session = await Sessions.findOne({
       where: { user_idUser: userId, CloseDate: null },
-      order: [['EntryDate', 'DESC']],
+      order: [["EntryDate", "DESC"]],
     });
 
     if (session) {

@@ -6,9 +6,7 @@ import {
   GetUserUseCase,
   UpdateUserUseCase,
 } from "../../application/use-cases/User";
-import { CreatePersonDTO } from "../../application/dto/person.dto";
 import { GenerateUserUseCase } from "../../application/use-cases/User/generateuser.usecase";
-import { PersonRepository } from "../repositories/person.repository";
 import { UnlockUserUseCase } from "../../application/use-cases/User/unlockuser.usecase";
 
 export class UserService {
@@ -33,6 +31,9 @@ export class UserService {
 
   async getAllUsers() {
     return await this.getUserUseCase.getAll();
+  }
+  async getUserByName(username: string){
+    return await this.getUserUseCase.getUserName(username)
   }
 
   async updateUser(id: number, data: UpdateUserDTO) {

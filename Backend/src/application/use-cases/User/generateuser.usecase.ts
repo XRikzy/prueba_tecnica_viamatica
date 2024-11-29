@@ -54,7 +54,7 @@ export class GenerateUserUseCase {
       username: data.username,
       password: data.password,
       mail: email,
-      sessionActive: "Y",
+      SessionActive: "N",
       idPerson2: person.idPerson,
       status: "active",
     });

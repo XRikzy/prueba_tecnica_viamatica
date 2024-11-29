@@ -1,0 +1,155 @@
+/* Sidebar Estilo */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #263238; /* Color oscuro */
+    color: white;
+    padding-top: 30px;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-nav li {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .sidebar-nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+  
+  .sidebar-nav li a:hover {
+    background-color: #29b6f6;
+    border-radius: 4px;
+  }
+  
+  /* Main content */
+  .maintenance-container {
+    margin: 0 auto; /* Centramos el contenedor */
+    padding: 40px;
+    max-width: 1200px; /* Máxima anchura para evitar que se extienda demasiado en pantallas grandes */
+    background-color: #f5f5f5; /* Fondo gris claro */
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 270px; /* Para que no quede pegado al sidebar */
+  }
+  
+  /* Centrado dentro de la pantalla */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #eceff1;
+  }
+  
+  /* Filtros de búsqueda */
+.filters input {
+    padding: 8px; /* Menos padding para hacerlos más pequeños */
+    font-size: 0.875rem; /* Reducir el tamaño de la fuente */
+    width: 200px; /* Ancho más pequeño */
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+  }
+  
+  .filters input:focus {
+    border-color: #29b6f6;
+    outline: none;
+  }
+  
+  /* Carga masiva */
+  .bulk-upload input {
+    font-size: 0.875rem; /* Reducir el tamaño de la fuente */
+    padding: 8px;
+    width: 200px; /* Ancho más pequeño */
+  }
+  
+  /* Formulario de actualización */
+  .user-update-form input, 
+  .user-update-form select {
+    width: 100%; /* Mantener el 100% para los campos de formulario */
+    padding: 8px; /* Reducir padding */
+    font-size: 0.875rem; /* Reducir tamaño de fuente */
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  
+  .user-update-form input:focus, 
+  .user-update-form select:focus {
+    border-color: #29b6f6;
+    outline: none;
+  }
+  
+  .user-update-form label {
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  
+  .user-update-form input, 
+  .user-update-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  
+  .user-update-form input:focus, 
+  .user-update-form select:focus {
+    border-color: #29b6f6;
+    outline: none;
+  }
+  
+  .user-update-form button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .user-update-form button:hover {
+    background-color: #e67e22;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .maintenance-container {
+      margin-left: 0;
+      padding: 20px;
+      width: 100%;
+      max-width: 600px; /* Limitar el ancho en pantallas pequeñas */
+    }
+  
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .filters button {
+      width: 100%;
+    }
+  }
+  

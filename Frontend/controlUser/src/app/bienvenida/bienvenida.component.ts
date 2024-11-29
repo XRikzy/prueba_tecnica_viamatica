@@ -1,35 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SessionService } from '../services/session.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-welcome',
   templateUrl: './bienvenida.component.html',
-  styleUrls: ['./bienvenida.component.css']
+  styleUrls: ['./bienvenida.component.css'],
 })
-export class BienvenidaComponent {
+export class BienvenidaComponent implements OnInit {
   username: string = '';
-  lastSession: string = '';
-  loginAttempts: number = 0;
-  sessionStartTime: string = '';
-  sessionEndTime: string = '';
+  entryDate: string = '';
+  userRole: string = '';
+  closeDate: string = 'No cerrado';
+  user_idUser: number = 5;
+  constructor(private router: Router, private sessionService: SessionService, private authServices: AuthService) {}
 
-  constructor(private router: Router) {
-  
+  async ngOnInit() {
     this.username = localStorage.getItem('username') || 'Usuario desconocido';
 
-  
-    const sessionData = JSON.parse(localStorage.getItem('lastSession') || '{}');
-    this.lastSession = sessionData.lastSession || 'No disponible';
-    this.loginAttempts = sessionData.loginAttempts || 0;
-    this.sessionStartTime = sessionData.sessionStartTime || 'N/A';
-    this.sessionEndTime = sessionData.sessionEndTime || 'N/A';
+    try {
+      const session = await this.sessionService.getSessionByUserId(
+        this.user_idUser
+      );
+      this.userRole = localStorage.getItem('rol') || 'Sin rol asignado';
+      this.entryDate = session.EntryDate || 'N/A';
+      this.closeDate = session.CloseDate || 'No cerrado';
+    } catch (error) {
+      console.error('Error al cargar la sesión:', error);
+    }
   }
-
-  logout() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
-    localStorage.removeItem('lastSession');
-    this.router.navigate(['/login']);
+  async logout() {
+    try {
+      await this.authServices.logout();
+      localStorage.removeItem('username');
+      localStorage.removeItem('rol');
+      localStorage.removeItem('token');
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   }
 }
-

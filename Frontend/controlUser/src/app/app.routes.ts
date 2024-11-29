@@ -3,35 +3,34 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
-import { MantenimientoUsuarioComponent } from './mantenimiento-usuario/mantenimiento-usuario.component';
 import { BienvenidaComponent } from './bienvenida/bienvenida.component';
+import { UserService } from './services/user.service';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
-    path: 'bienvenida',
+    path: 'welcome',
     component: BienvenidaComponent,
     canActivate: [AuthGuard],
-    data: { role: 'user' }
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: { role: 'admin' }
   },
   {
-    path: 'user-maintenance',
-    component: MantenimientoUsuarioComponent,
+    path: 'maintenance',
+    component: MaintenanceComponent,
     canActivate: [AuthGuard],
-    data: { role: 'admin' }
   },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  providers: [UserService],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

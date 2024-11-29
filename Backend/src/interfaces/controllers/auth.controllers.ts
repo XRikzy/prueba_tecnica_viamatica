@@ -17,8 +17,8 @@ export class AuthController {
   async login(req: Request, res: Response): Promise<void> {
     try {
       const { identifier, password } = req.body;
-      const { token, sessionId, rol } = await this.authService.login(identifier, password);
-      res.json({ token, sessionId, rol });
+      const { token, sessionId, rol, username } = await this.authService.login(identifier, password);
+      res.json({ token, sessionId, rol, username });
     } catch (error) {
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ message: error.message });

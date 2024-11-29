@@ -9,7 +9,7 @@ userRoutes.get("/users", (req, res) => userController.getAllUsers(req, res));
 userRoutes.get("/users/:id", (req, res) =>
   userController.getUserById(req, res)
 );
-userRoutes.patch("/users/:id", (req, res) =>
+userRoutes.put("/users/:id", (req, res) =>
   userController.updateUser(req, res)
 );
 userRoutes.delete("/users/:id", (req, res) =>
@@ -20,6 +20,9 @@ userRoutes.post("/users/create", (req, res) =>
 );
 userRoutes.post("/unlock/:id", (req, res) =>
   userController.unLockedUser(req, res)
+);
+userRoutes.get("/users/search/:username", (req, res) =>
+  userController.getUsername(req, res)
 );
 
 export default userRoutes;

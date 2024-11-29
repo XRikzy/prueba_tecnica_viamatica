@@ -35,7 +35,7 @@ User.init(
     SessionActive: {
       type: DataTypes.CHAR(1),
       allowNull: false,
-      defaultValue: "Y",
+      defaultValue: "N",
     },
     idPerson2: {
       type: DataTypes.INTEGER,

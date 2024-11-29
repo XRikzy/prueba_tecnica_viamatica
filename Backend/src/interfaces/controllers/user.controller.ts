@@ -49,7 +49,20 @@ export class UsersControllers {
   async getUserById(req: Request, res: Response) {
     try {
       const user = await this.userServices.getUser(
-        parseInt(req.params.userName)
+        parseInt(req.params.id)
+      );
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({
+        error:
+          "Error al obtener el usuario, no se encuentra en la base de datos o no existe..",
+      });
+    }
+  }
+  async getUsername(req: Request, res: Response) {
+    try {
+      const user = await this.userServices.getUserByName(
+        req.params.username
       );
       res.status(200).json(user);
     } catch (error) {

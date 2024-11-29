@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import axios from 'axios';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/login';
+  private logoutUrl = 'http://localhost:3000/api/logout';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  login(username: string, password: string): Observable<any> {
-    const body = { username, password };
-    return this.http.post<any>(this.apiUrl, body);
-  }
+  async logout(): Promise<void> {
+    const token = localStorage.getItem('token');
 
-  saveToken(token: string): void {
-    localStorage.setItem('authToken', token);
-  }
+    if (!token) {
+      throw new Error('Token no encontrado en localStorage');
+    }
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
-  }
-
-  logout(): void {
-    localStorage.removeItem('authToken');
+    try {
+      await axios.post(this.logoutUrl, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      throw error;
+    }
   }
 }

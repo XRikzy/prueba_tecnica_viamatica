@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { CommonModule } from '@angular/common';
-
+import {  Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,23 +14,31 @@ export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private loginService: LoginService , private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      identifier: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.login(this.loginForm.value).subscribe(
-        response => {
-          console.log('Login successful', response);
-        },
-        error => {
-          console.error('Login failed', error);
+      const {identifier, password} = this.loginForm.value
+      this.loginService.login(identifier, password).then(response => {
+        if (response.token && response.rol) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('rol', response.rol);
+          localStorage.setItem('username', response.username);
+
+          if (response.rol === 'user') {
+            this.router.navigate(['/welcome']);
+          } else if (response.rol === 'admin') {
+            this.router.navigate(['/dashboard']);
+          }
         }
-      );
+      }).catch(error => {
+        console.error('Error de autenticación:', error);
+      });
     }
   }
 

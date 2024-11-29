@@ -1,26 +1,23 @@
+
 <div class="dashboard-container">
-    <h2>Dashboard - Administrador</h2>
   
-    <div class="indicators">
-      <div class="indicator">
-        <h3>Usuarios Activos</h3>
-        <p>{{ activeUsers }}</p>
-      </div>
-      <div class="indicator">
-        <h3>Usuarios Inactivos</h3>
-        <p>{{ inactiveUsers }}</p>
-      </div>
-      <div class="indicator">
-        <h3>Usuarios Bloqueados</h3>
-        <p>{{ blockedUsers }}</p>
-      </div>
-      <div class="indicator">
-        <h3>Intentos de Inicio de Sesión Fallidos</h3>
-        <p>{{ failedLoginAttempts }}</p>
-      </div>
+  <div class="indicators">
+    <div class="indicator">
+      <h3>Usuarios Activos</h3>
+      <p>{{ activeUsers }}</p>
     </div>
-  
-    <button (click)="logout()">Cerrar sesión</button>
+    <div class="indicator">
+      <h3>Usuarios Inactivos</h3>
+      <p>{{ inactiveUsers }}</p>
+    </div>
+    <div class="indicator">
+      <h3>Usuarios Bloqueados</h3>
+      <p>{{ blockedUsers }}</p>
+    </div>
+    <div class="indicator">
+      <h3>Intentos de Inicio de Sesión Fallidos</h3>
+      <p>{{ failedLoginAttempts }}</p>
+    </div>
   </div>
-  
+</div>
 

@@ -1,26 +1,57 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor() { }
+  private apiUrl = 'http://localhost:3000/api/users'; 
+  private searchUrl = 'http://localhost:3000/api/users/search'
 
-  getUserIndicators(): Observable<any> {
-    // This is mock data. In a real application, you would fetch this from a backend.
-    return of({
-      activeUsers: 150,
-      inactiveUsers: 50,
-      blockedUsers: 10
-    });
+  constructor() {}
+
+  // Obtener todos los usuarios
+  async getUsers() {
+    return axios.get(this.apiUrl)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        throw error;
+      });
   }
 
-  getLoginIndicators(): Observable<any> {
-    // This is mock data. In a real application, you would fetch this from a backend.
-    return of({
-      failedLogins: 25,
-      successfulLogins: 200
-    });
+  // Subir archivo de usuarios
+  async uploadUsers(file: File) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return axios.post(`${this.apiUrl}/upload`, formData)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error uploading file:', error);
+        throw error;
+      });
+  }
+
+  // Actualizar datos de usuario
+  async updateUser(userId: number, userData: any) {
+    return axios.put(`${this.apiUrl}/${userId}`, userData)
+      .then(response => response.data)
+      .catch(error => {
+        console.error(`Error updating user ${userId}:`, error);
+        throw error;
+      });
+  }
+
+
+  async searchUsers(query: string) {
+    return axios.get(`${this.searchUrl}/${query}`)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error searching users:', error);
+        throw error;
+      });
   }
 }
+
+
