@@ -1,0 +1,15 @@
+<div class="welcome-container">
+    <h2>Bienvenido, {{ username }}</h2>
+  
+    <div class="session-info">
+      <h3>Información de la última sesión</h3>
+      <p><strong>Intentos de inicio de sesión fallidos:</strong> {{ loginAttempts }}</p>
+      <p><strong>Hora de inicio de sesión:</strong> {{ sessionStartTime }}</p>
+      <p><strong>Hora de fin de sesión:</strong> {{ sessionEndTime }}</p>
+      <p><strong>Última sesión:</strong> {{ lastSession }}</p>
+    </div>
+  
+    <button (click)="logout()">Cerrar sesión</button>
+  </div>
+  
+

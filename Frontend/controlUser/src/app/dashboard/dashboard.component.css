@@ -1,0 +1,23 @@
+.dashboard {
+    padding: 20px;
+  }
+  
+  .user-info {
+    margin-bottom: 20px;
+  }
+  
+  .indicators {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .indicators > * {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .indicators > *:last-child {
+    margin-right: 0;
+  }
+  
+  

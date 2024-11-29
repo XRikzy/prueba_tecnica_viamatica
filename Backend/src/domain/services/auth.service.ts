@@ -1,4 +1,5 @@
 import { generateToken } from '../../utils/jwt';
+import { PasswordValid, UserAlreadySession, UserBlocked, UserNoActiveSession, UserNotFound, UserWithOutRols } from '../../utils/validationerros.utils';
 import { RolUserRepository } from '../repositories/roluser.repository';
 import { SessionsRepository } from '../repositories/session.repository';
 import { UserRepository } from '../repositories/user.repository';
@@ -12,21 +13,17 @@ export class AuthService {
   async login(identifier: string, password: string): Promise<{ token: string; sessionId: number }> {
     const user = await this.userRepository.findByIdentifier(identifier);
     if (!user) {
-      throw new Error('User not found');
+      throw new UserNotFound();
     }
     if (user.status === 'blocked') {
-      throw new Error('User is blocked.');
+      throw new UserBlocked();
     }
     if (user.sessionActive === 'Y') {
-      throw new Error('User already has an active session.');
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      throw new Error('Invalid credentials');
+      throw new UserAlreadySession();
     }
     const roles = await this.rolUserRepository.getRolesByUserId(user.idUser);
     if (roles.length === 0) {
-      throw new Error('User has no roles assigned');
+      throw new UserWithOutRols();
     }
     const token = generateToken({ id: user.idUser, roles: roles.map((rol) => rol.rolName) });
     await this.userRepository.setSessionActive(user.idUser, 'Y');
@@ -37,7 +34,7 @@ export class AuthService {
   async logout(userId: number): Promise<void> {
     const user = await this.userRepository.findById(userId);
     if (!user || user.sessionActive === 'N') {
-      throw new Error('No active session found for this user.');
+      throw new UserNoActiveSession();
     }
     await this.sessionsRepository.closeSession(userId);
     await this.userRepository.setSessionActive(userId, 'N');

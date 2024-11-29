@@ -1,7 +1,4 @@
 import { ValidationError } from "./errors/validationerror.utils";
-
-
-  
 export class InvalidIdentificationError extends ValidationError {
     constructor(message: string = 'La identificación no es válida') {
       super(message, 'INVALID_IDENTIFICATION');
@@ -47,6 +44,36 @@ export class InvalidIdentificationError extends ValidationError {
   export class ConsecutiveNumbersInIdentificationError extends ValidationError {
     constructor(message: string = 'La identificación contiene números consecutivos repetidos') {
       super(message, 'CONSECUTIVE_NUMBERS_IN_IDENTIFICATION');
+    }
+  }
+  export class UserNotFound extends ValidationError {
+    constructor(message: string = 'No se Encuentra el Usuario') {
+      super(message, 'USER_NOT_FOUND');
+    }
+  }
+  export class UserBlocked extends ValidationError {
+    constructor(message: string = 'Este usuario esta bloqueado por sobrepasar el numero de intentos') {
+      super(message, 'USER_BLOCKED');
+    }
+  }
+  export class UserAlreadySession extends ValidationError {
+    constructor(message: string = 'Este usuario esta en una Sesion') {
+      super(message, 'USER_ALREADY_SESSION');
+    }
+  }
+  export class UserWithOutRols extends ValidationError {
+    constructor(message: string = 'Este usuario no tiene roles asignados') {
+      super(message, 'USER_WITHOUT_ROLES');
+    }
+  }
+  export class UserNoActiveSession extends ValidationError {
+    constructor(message: string = 'Este usuario no tiene una sesion activa') {
+      super(message, 'USER_WITHOUT_ACTIVE_SESSION');
+    }
+  }
+  export class PasswordValid extends ValidationError {
+    constructor(message: string = 'Credenciales invalidas') {
+      super(message, 'IS_PASSWORD_WRONG');
     }
   }
   

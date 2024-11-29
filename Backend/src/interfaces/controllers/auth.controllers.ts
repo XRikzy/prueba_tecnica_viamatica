@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../../domain/services/auth.service';
+import { UserAlreadySession, UserBlocked, UserNotFound, UserWithOutRols } from '../../utils/validationerros.utils';
+import sequelize from 'sequelize';
 
 export class AuthController {
   private authService = new AuthService();
@@ -10,11 +12,17 @@ export class AuthController {
       const { token, sessionId } = await this.authService.login(identifier, password);
       res.json({ token, sessionId });
     } catch (error) {
-      
-      res.status(401).json({ message: "El usuario o la contraseña es incorrecta" });
+      if (
+        error instanceof UserNotFound ||
+        error instanceof UserBlocked ||
+        error instanceof UserAlreadySession ||
+        error instanceof UserWithOutRols
+      ) {
+        res.status(400).json({ error: error.message });
+      }
+      res.status(500).json({ error: "Error interno del servidor." });
+    }
     }
   }
 
-  
-}
 

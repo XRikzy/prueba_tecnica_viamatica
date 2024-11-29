@@ -4,19 +4,17 @@ import { Rol } from "./rol.model";
 import { User } from "./user.model";
 
 class RolUser extends Model {
-  public Rol_idRol!: number;
+  public id!: number;
   public user_idUser!: number;
+  public rol_id!: number;
 }
 
 RolUser.init(
   {
-    Rol_idRol: {
+    id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: Rol,
-        key: "idRol",
-      },
       primaryKey: true,
+      autoIncrement: true,
     },
     user_idUser: {
       type: DataTypes.INTEGER,
@@ -26,6 +24,10 @@ RolUser.init(
       },
       primaryKey: true,
     },
+    rol_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
@@ -34,8 +36,5 @@ RolUser.init(
     timestamps: false,
   }
 );
-
-Rol.belongsToMany(User, { through: RolUser });
-User.belongsToMany(Rol, { through: RolUser });
 
 export { RolUser };

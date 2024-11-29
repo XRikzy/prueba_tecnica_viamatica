@@ -60,6 +60,9 @@ export class RolUserControllers {
        await this.RolUserService.deleteRolUser(
         parseInt(req.params.id)
       );
+      res
+        .status(201)
+        .json({ message: "Rol de usuario eliminado" });
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la RolUsera" });
     }

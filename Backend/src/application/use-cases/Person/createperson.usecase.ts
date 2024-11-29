@@ -15,9 +15,9 @@ export class CreatePersonUseCase {
     if (!validateIdentification(data.identification)) {
       throw new InvalidIdentificationError();
     }
-    if (/[0-9]{4,}/.test(data.identification)) {
+    if (/(\d)\1{3,}/.test(data.identification)) {
       throw new ConsecutiveNumbersInIdentificationError();
-    }
+  }
     const newUser = await this.personRepository.create(data);
     return newUser;
   }

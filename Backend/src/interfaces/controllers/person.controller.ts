@@ -56,6 +56,9 @@ export class PersonControllers {
   async deletePerson(req: Request, res: Response) {
     try {
       await this.personService.deletePerson(parseInt(req.params.id));
+      res
+        .status(201)
+        .json({ message: "Persona Eliminada" });
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la persona" });
     }

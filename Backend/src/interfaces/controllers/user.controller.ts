@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { UserService } from "../../domain/services/user.service";
 import { GenerateUserUseCase } from "../../application/use-cases/User/generateuser.usecase";
-import { EmailAlreadyExistsError, InvalidPasswordError, InvalidUsernameCharactersError, UsernameAlreadyExistsError } from "../../utils/validationerros.utils";
+import {
+  EmailAlreadyExistsError,
+  InvalidPasswordError,
+  InvalidUsernameCharactersError,
+  UsernameAlreadyExistsError,
+} from "../../utils/validationerros.utils";
 
 export class UsersControllers {
   private userServices: UserService;
@@ -22,17 +27,15 @@ export class UsersControllers {
       const user = await this.userServices.getAllUsers();
       res.status(200).json(user);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error:
-            "Error en la obtencion de usuario, es probable que no tengas usuarios..",
-        });
+      res.status(500).json({
+        error:
+          "Error en la obtencion de usuario, es probable que no tengas usuarios..",
+      });
     }
   }
-  async generateUser(req: Request, res: Response){
+  async generateUser(req: Request, res: Response) {
     try {
-      const newUser = await this.userServices.generateUser(req.body)
+      const newUser = await this.userServices.generateUser(req.body);
       res.status(200).json({
         username: newUser.username,
         password: newUser.password,
@@ -40,7 +43,7 @@ export class UsersControllers {
         sessionActive: newUser.sessionActive,
         idPerson2: newUser.idPerson2,
         status: newUser.status,
-      })
+      });
     } catch (error) {
       if (
         error instanceof UsernameAlreadyExistsError ||
@@ -48,12 +51,12 @@ export class UsersControllers {
         error instanceof InvalidPasswordError ||
         error instanceof EmailAlreadyExistsError
       ) {
-         res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message });
       }
       if (error === "La persona asociada no existe.") {
         res.status(404).json({ error: error });
       }
-       res.status(500).json({ error: "Error interno del servidor." });
+      res.status(500).json({ error: "Error interno del servidor." });
     }
   }
   async getUserById(req: Request, res: Response) {
@@ -63,12 +66,10 @@ export class UsersControllers {
       );
       res.status(200).json(user);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error:
-            "Error al obtener el usuario, no se encuentra en la base de datos o no existe..",
-        });
+      res.status(500).json({
+        error:
+          "Error al obtener el usuario, no se encuentra en la base de datos o no existe..",
+      });
     }
   }
   async updateUser(req: Request, res: Response) {
@@ -85,9 +86,10 @@ export class UsersControllers {
 
   async deleteUser(req: Request, res: Response) {
     try {
-       await this.userServices.deleteUser(
-        parseInt(req.params.id)
-      );
+      await this.userServices.deleteUser(parseInt(req.params.id));
+      res
+        .status(201)
+        .json({ message: "El usuario fue eliminado satisfactoriamente" });
     } catch (error) {
       res.status(500).json({ error: "Error eliminando el usuario" });
     }

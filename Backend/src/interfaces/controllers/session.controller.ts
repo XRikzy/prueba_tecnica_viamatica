@@ -69,6 +69,9 @@ export class SessionsControllers {
       await this.SessionsService.deleteSessions(
         parseInt(req.params.id)
       );
+      res
+        .status(201)
+        .json({ message: "Sesion eliminada" });
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la Sessionsa" });
     }
