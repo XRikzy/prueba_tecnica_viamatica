@@ -1,36 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private apiUrl = 'http://localhost:3000/api/login';
 
-  constructor() {
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {}
+
+  login(username: string, password: string): Observable<any> {
+    const body = { username, password };
+    return this.http.post<any>(this.apiUrl, body);
   }
 
-  public get currentUserValue() {
-    return this.currentUserSubject.value;
+  saveToken(token: string): void {
+    localStorage.setItem('authToken', token);
   }
 
-  login(username: string, password: string) {
-    // This is a mock login. In a real application, you would validate credentials against a backend.
-    const user = { id: 1, username: username, role: 'ADMINISTRATOR' };
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    return user;
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
   }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-  }
-
-  isAdmin(): boolean {
-    return this.currentUserValue && this.currentUserValue.role === 'ADMINISTRATOR';
+  logout(): void {
+    localStorage.removeItem('authToken');
   }
 }

@@ -61,7 +61,7 @@ export class UsersControllers {
   }
   async unLockedUser (req: Request, res: Response){
     try{
-      await this.userServices.unlockedUser(Number(req.params.id))
+      await this.userServices.unlockedUser(parseInt(req.params.id))
       res.status(200).json({ message: 'Usuario desbloqueado con éxito.' });
     } catch (error){
       if (error instanceof AppError) {
