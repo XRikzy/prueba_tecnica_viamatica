@@ -5,16 +5,13 @@ export class RolOptionRepository {
   async create(RolOptionData: Partial<RolOption>) {
     return await RolOption.create(RolOptionData);
   }
-  async createMany(RolOptionData: Partial<RolOption>[]) {
-    return await RolOption.bulkCreate(RolOptionData);
-  }
-  async getAll() {
+  async findAll() {
     return await RolOption.findAll();
   }
   async getByRolOptionName(nameOption: string) {
     return await RolOption.findOne({ where: { nameOption } });
   }
-  async getById(id: number) {
+  async findById(id: number) {
     return await RolOption.findByPk(id);
   }
 

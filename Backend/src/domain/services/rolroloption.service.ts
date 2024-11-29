@@ -1,32 +1,31 @@
-import { RolRolOption } from "../../config/model/rolroloption.model";
+import { CreateRolRolOptionDTO } from "../../application/dto/rolroloption.dto";
+import { CreateRolRolOptionUseCase, DeleteRolRolOptionUseCase, GetRolRolOptionUseCase, UpdateRolRolOptionUseCase } from "../../application/use-cases/RolRolOption";
 import { RolRolOptionRepository } from "../repositories/rolroloption.respository";
 
-
 export class RolRolOptionServices {
-  private RolRolOptionRepository: RolRolOptionRepository;
+  private RolRolOptionRepository = new RolRolOptionRepository();
 
-  constructor(RolRolOptionRepository: RolRolOptionRepository) {
-    this.RolRolOptionRepository = RolRolOptionRepository;
-  }
-  async createRolRolOption(RolRolOptionData: Partial<RolRolOption>) {
-    return await this.RolRolOptionRepository.create(RolRolOptionData);
-  }
-  async createManyRolRolOption(RolRolOptionData: Partial<RolRolOption>[]) {
-    return await this.RolRolOptionRepository.createMany(RolRolOptionData);
+  private createRolRolOptionUseCase = new CreateRolRolOptionUseCase(this.RolRolOptionRepository);
+  private getRolRolOptionUseCase = new GetRolRolOptionUseCase(this.RolRolOptionRepository);
+  private updateRolRolOptionUseCase = new UpdateRolRolOptionUseCase(this.RolRolOptionRepository);
+  private deleteRolRolOptionUseCase = new DeleteRolRolOptionUseCase(this.RolRolOptionRepository);
+
+  async createRolRolOption(RolRolOptionData: CreateRolRolOptionDTO) {
+    return await this.createRolRolOptionUseCase.execute(RolRolOptionData);
   }
   async getAllRolRolOption() {
-    return await this.RolRolOptionRepository.getAll();
+    return await this.getRolRolOptionUseCase.getAll();
   }
   async getRolByIdOption(IdOption: number) {
-    return await this.RolRolOptionRepository.getByIdRolOption(IdOption);
+    return await this.getRolRolOptionUseCase.getByIdOption(IdOption);
   }
   async getRolRolOptionById(id: number) {
-    return await this.RolRolOptionRepository.getByIdRol(id);
+    return await this.getRolRolOptionUseCase.execute(id);
   }
   async updateRolRolOption(id: number, userData: any) {
-    return await this.RolRolOptionRepository.update(id, userData);
+    return await this.updateRolRolOptionUseCase.execute(id, userData);
   }
   async deleteRolRolOption(id: number) {
-    return await this.RolRolOptionRepository.delete(id);
+    return await this.deleteRolRolOptionUseCase.execute(id);
   }
 }

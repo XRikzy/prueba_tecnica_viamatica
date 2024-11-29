@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { UserService } from "../../domain/services/user.service";
+import { GenerateUserUseCase } from "../../application/use-cases/User/generateuser.usecase";
+import { EmailAlreadyExistsError, InvalidPasswordError, InvalidUsernameCharactersError, UsernameAlreadyExistsError } from "../../utils/validationerros.utils";
 
 export class UsersControllers {
   private userServices: UserService;
+  private generateUserUseCase = new GenerateUserUseCase();
   constructor() {
     this.userServices = new UserService();
   }
@@ -25,6 +28,32 @@ export class UsersControllers {
           error:
             "Error en la obtencion de usuario, es probable que no tengas usuarios..",
         });
+    }
+  }
+  async generateUser(req: Request, res: Response){
+    try {
+      const newUser = await this.userServices.generateUser(req.body)
+      res.status(200).json({
+        username: newUser.username,
+        password: newUser.password,
+        mail: newUser.mail,
+        sessionActive: newUser.sessionActive,
+        idPerson2: newUser.idPerson2,
+        status: newUser.status,
+      })
+    } catch (error) {
+      if (
+        error instanceof UsernameAlreadyExistsError ||
+        error instanceof InvalidUsernameCharactersError ||
+        error instanceof InvalidPasswordError ||
+        error instanceof EmailAlreadyExistsError
+      ) {
+         res.status(400).json({ error: error.message });
+      }
+      if (error === "La persona asociada no existe.") {
+        res.status(404).json({ error: error });
+      }
+       res.status(500).json({ error: "Error interno del servidor." });
     }
   }
   async getUserById(req: Request, res: Response) {

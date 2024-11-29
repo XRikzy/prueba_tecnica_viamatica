@@ -1,31 +1,34 @@
-import { RolUser } from "../../config/model/roluser.model";
+import {
+  CreateRolUserDTO,
+  UpdateRolUserDTO,
+} from "../../application/dto/roluser.dto";
+import { CreateRolUserUseCase, DeleteRolUserUseCase, GetRolUserUseCase, UpdateRolUserUseCase } from "../../application/use-cases/RolUser";
 import { RolUserRepository } from "../repositories/roluser.repository";
 
 export class RolUserServices {
-  private RolUserRepository: RolUserRepository;
+  private RolUserRepository = new RolUserRepository();
 
-  constructor(RolUserRepository: RolUserRepository) {
-    this.RolUserRepository = RolUserRepository;
-  }
-  async createRolUser(RolUserData: Partial<RolUser>) {
-    return await this.RolUserRepository.create(RolUserData);
-  }
-  async createManyRolUser(RolUserData: Partial<RolUser>[]) {
-    return await this.RolUserRepository.createMany(RolUserData);
+  private createRolUserUseCase = new CreateRolUserUseCase(this.RolUserRepository);
+  private getRolUserUseCase = new GetRolUserUseCase(this.RolUserRepository);
+  private updateRolUserUseCase = new UpdateRolUserUseCase(this.RolUserRepository);
+  private deleteRolUserUseCase = new DeleteRolUserUseCase(this.RolUserRepository);
+  
+  async createRolUser(data: CreateRolUserDTO) {
+    return await this.createRolUserUseCase.execute(data);
   }
   async getAllRolUser() {
-    return await this.RolUserRepository.getAll();
+    return await this.getRolUserUseCase.getAll();
   }
-  async getRolUserByRolUserName(idRol: number) {
-    return await this.RolUserRepository.getByIdRol(idRol);
+  async getByUserId(idUser: number) {
+    return await this.getRolUserUseCase.getByUserId(idUser);
   }
-  async getRolUserById(id: number) {
-    return await this.RolUserRepository.getByIdUser(id);
+  async getById(id: number) {
+    return await this.getRolUserUseCase.execute(id);
   }
-  async updateRolUser(id: number, userData: any) {
-    return await this.RolUserRepository.update(id, userData);
+  async updateRolUser(id: number, data: UpdateRolUserDTO) {
+    return await this.updateRolUserUseCase.execute(id, data);
   }
   async deleteRolUser(id: number) {
-    return await this.RolUserRepository.delete(id);
+    return await this.deleteRolUserUseCase.execute(id);
   }
 }

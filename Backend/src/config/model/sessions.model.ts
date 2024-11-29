@@ -1,8 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../infrastructure/database/databaseconfig";
-import { Users } from "./user.model";
+import { User } from "./user.model";
 
 class Sessions extends Model {
+  public id!: number;
   public EntryDate!: Date;
   public CloseDate!: Date;
   public user_idUser!: number;
@@ -16,12 +17,12 @@ Sessions.init(
     },
     CloseDate: {
       type: DataTypes.DATE,
-      allowNull: true, // Puede estar vacío si la sesión aún está activa
+      allowNull: true,
     },
     user_idUser: {
       type: DataTypes.INTEGER,
       references: {
-        model: Users,
+        model: User,
         key: "idUser",
       },
       allowNull: false,
@@ -31,12 +32,11 @@ Sessions.init(
     sequelize,
     modelName: "Sessions",
     tableName: "Sessions",
-    timestamps: false, // Si no necesitas timestamps en esta tabla
+    timestamps: false,
   }
 );
 
-// Relación con Users
-Users.hasMany(Sessions, { foreignKey: "user_idUser" });
-Sessions.belongsTo(Users, { foreignKey: "user_idUser" });
+User.hasMany(Sessions, { foreignKey: "user_idUser" });
+Sessions.belongsTo(User, { foreignKey: "user_idUser" });
 
 export { Sessions };

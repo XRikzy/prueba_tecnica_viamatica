@@ -1,17 +1,18 @@
-import { Person } from "../../../config/model/person.model";
-import { PersonRepository } from "../../../domain/repositories/person.repository";
-import { CreatePersonDTO } from "../../dto/person.dto";
+import { RolOption } from "../../../config/model/roloptions.model";
+import { RolOptionRepository } from "../../../domain/repositories/roloption.repository";
+import { CreateRolOptionDTO } from "../../dto/roloption.dto";
 
 
-export class CreatePersonUseCase {
-  private personRepository: PersonRepository;
 
-  constructor(userRepository: PersonRepository) {
-    this.personRepository = userRepository;
+export class CreateRolOptionUseCase {
+  private RolOptionRepository: RolOptionRepository;
+
+  constructor(userRepository: RolOptionRepository) {
+    this.RolOptionRepository = userRepository;
   }
 
-  async execute(data: CreatePersonDTO): Promise<Person> {
-    const newUser = await this.personRepository.create(data);
+  async execute(data: CreateRolOptionDTO): Promise<RolOption> {
+    const newUser = await this.RolOptionRepository.create(data);
     return newUser;
   }
 }

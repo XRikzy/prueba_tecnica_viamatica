@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import {sequelize} from '../../infrastructure/database/databaseconfig'; // configuración de Sequelize
-import { User } from './user.model';
+import {sequelize} from '../../infrastructure/database/databaseconfig';
 
 export class Person extends Model {
   public idPerson!: number;
@@ -8,7 +7,7 @@ export class Person extends Model {
   public lastName!: string;
   public identification!: string;
   public bornDate !: Date
-  public userId!: number;
+  
 }
 
 Person.init(

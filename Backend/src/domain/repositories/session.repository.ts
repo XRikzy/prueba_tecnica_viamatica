@@ -8,13 +8,13 @@ export class SessionsRepository {
   async createMany(SessionssData: Partial<Sessions>[]) {
     return await Sessions.bulkCreate(SessionssData);
   }
-  async getAll() {
+  async findAll() {
     return await Sessions.findAll();
   }
-  async getBySessionsIdUser(idUser: number) {
+  async getSessionsByIdUser(idUser: number) {
     return await Sessions.findOne({ where: { idUser } });
   }
-  async getById(id: number) {
+  async findById(id: number) {
     return await Sessions.findByPk(id);
   }
 
@@ -31,5 +31,19 @@ export class SessionsRepository {
       return await user.destroy();
     }
     return null;
+  }
+  async createSession(userId: number): Promise<Sessions> {
+    return Sessions.create({ user_idUser: userId, EntryDate: new Date() });
+  }
+
+  async closeSession(userId: number): Promise<void> {
+    const session = await Sessions.findOne({
+      where: { user_idUser: userId, CloseDate: null },
+      order: [['EntryDate', 'DESC']],
+    });
+
+    if (session) {
+      await session.update({ CloseDate: new Date() });
+    }
   }
 }

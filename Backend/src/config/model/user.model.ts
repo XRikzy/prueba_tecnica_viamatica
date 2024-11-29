@@ -8,7 +8,6 @@ export class User extends Model {
   public password!: string;
   public mail!: string;
   public sessionActive!: string;
-  public roleId!: number;
   public idPerson2!: number;
   public status!: 'active' | 'blocked';
 }
@@ -35,6 +34,7 @@ User.init(
     SessionActive: {
       type: DataTypes.CHAR(1),
       allowNull: false,
+      defaultValue: 'Y',
     },
     idPerson2: {
       type: DataTypes.INTEGER,

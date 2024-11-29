@@ -31,11 +31,10 @@ RolUser.init(
     sequelize,
     modelName: "RolUser",
     tableName: "Rol_user",
-    timestamps: false, // Si no necesitas timestamps en esta tabla
+    timestamps: false,
   }
 );
 
-// Relaciones
 Rol.belongsToMany(User, { through: RolUser });
 User.belongsToMany(Rol, { through: RolUser });
 

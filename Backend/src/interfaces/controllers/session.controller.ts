@@ -1,23 +1,14 @@
 import { Request, Response } from "express";
-import { SessionsServices } from "../../domain/services/session.service";
+import { SessionsService } from "../../domain/services/session.service";
 
 export class SessionsControllers {
-  private SessionsService: SessionsServices;
-  constructor(SessionsService: SessionsServices) {
+  private SessionsService: SessionsService;
+  constructor(SessionsService: SessionsService) {
     this.SessionsService = SessionsService;
   }
   async createSessions(req: Request, res: Response) {
     try {
       const user = await this.SessionsService.createSessions(req.body);
-      res.status(201).json(user);
-    } catch (error) {
-      res.status(500).json({ error: "Error creando a la Sessionsa" });
-      console.log(error);
-    }
-  }
-  async createManySessions(req: Request, res: Response) {
-    try {
-      const user = await this.SessionsService.createManySessions(req.body);
       res.status(201).json(user);
     } catch (error) {
       res.status(500).json({ error: "Error creando a la Sessionsa" });
@@ -35,10 +26,23 @@ export class SessionsControllers {
       });
     }
   }
-  async getSessionsBySessionsName(req: Request, res: Response) {
+  async getSessionByIdUser(req: Request, res: Response) {
     try {
-      const user = await this.SessionsService.getSessionsBySessionsName(
+      const user = await this.SessionsService.getSessionByUser(
         parseInt(req.params.idUser)
+      );
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({
+        error:
+          "Error al obtener a la Sessionsa, no se encuentra en la base de datos o no existe..",
+      });
+    }
+  }
+  async getSession(req: Request, res: Response) {
+    try {
+      const user = await this.SessionsService.getSessions(
+        parseInt(req.params.id)
       );
       res.status(200).json(user);
     } catch (error) {
@@ -62,14 +66,9 @@ export class SessionsControllers {
 
   async deleteSessions(req: Request, res: Response) {
     try {
-      const result = await this.SessionsService.deleteSessions(
+      await this.SessionsService.deleteSessions(
         parseInt(req.params.id)
       );
-      if (result) {
-        res.status(200).json({ message: "Sessionsa eliminada" });
-      } else {
-        res.status(404).json({ message: "Sessionsa no encontrado" });
-      }
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la Sessionsa" });
     }

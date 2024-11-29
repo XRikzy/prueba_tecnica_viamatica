@@ -22,7 +22,7 @@ RolOption.init(
     sequelize,
     modelName: "RolOption",
     tableName: "RolOption",
-    timestamps: false, // Si no necesitas timestamps en esta tabla
+    timestamps: false,
   }
 );
 

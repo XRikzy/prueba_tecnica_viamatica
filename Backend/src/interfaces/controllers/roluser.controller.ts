@@ -15,15 +15,6 @@ export class RolUserControllers {
       console.log(error)
     }
   }
-  async createManyRolUser(req: Request, res: Response) {
-    try {
-      const user = await this.RolUserService.createManyRolUser(req.body);
-      res.status(201).json(user);
-    } catch (error) {
-      res.status(500).json({ error: "Error creando a la RolUsera" });
-      console.log(error)
-    }
-  }
   async getAllRolUser(req: Request, res: Response) {
     try {
       const user = await this.RolUserService.getAllRolUser();
@@ -37,10 +28,10 @@ export class RolUserControllers {
         });
     }
   }
-  async getRolUserByIdRol(req: Request, res: Response) {
+  async getRolUserByIdUser(req: Request, res: Response) {
     try {
-      const user = await this.RolUserService.getRolUserByRolUserName(
-        parseInt(req.params.idRol)
+      const user = await this.RolUserService.getByUserId(
+        parseInt(req.params.idUser)
       );
       res.status(200).json(user);
     } catch (error) {
@@ -66,14 +57,9 @@ export class RolUserControllers {
 
   async deleteRolUser(req: Request, res: Response) {
     try {
-      const result = await this.RolUserService.deleteRolUser(
+       await this.RolUserService.deleteRolUser(
         parseInt(req.params.id)
       );
-      if (result) {
-        res.status(200).json({ message: "RolUsera eliminada" });
-      } else {
-        res.status(404).json({ message: "RolUsera no encontrado" });
-      }
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la RolUsera" });
     }

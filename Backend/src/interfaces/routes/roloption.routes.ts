@@ -1,19 +1,14 @@
 import { Router } from "express";
-import { RolOptionRepository } from "../../domain/repositories/roloption.repository";
 import { RolOptionServices } from "../../domain/services/roloption.service";
 import { RolOptionControllers } from "../controllers/roloption.controller";
 
 
 const rolOptionRoutes = Router();
-const rolOptionRepository = new RolOptionRepository();
-const rolOptionService = new RolOptionServices(rolOptionRepository);
+const rolOptionService = new RolOptionServices();
 const rolOptionControlOptionler = new RolOptionControllers(rolOptionService);
 
 rolOptionRoutes.post("/roloption", (req, res) =>
   rolOptionControlOptionler.createRolOption(req, res)
-);
-rolOptionRoutes.post("/manyroloption", (req, res) =>
-  rolOptionControlOptionler.createManyRolOption(req, res)
 );
 rolOptionRoutes.get("/roloption", (req, res) =>
   rolOptionControlOptionler.getAllRolOption(req, res)

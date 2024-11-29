@@ -5,19 +5,15 @@ export class RolRolOptionRepository {
   async create(RolRolOptionData: Partial<RolRolOption>) {
     return await RolRolOption.create(RolRolOptionData);
   }
-  async createMany(RolRolOptionData: Partial<RolRolOption>[]) {
-    return await RolRolOption.bulkCreate(RolRolOptionData);
-  }
-  async getAll() {
+  async findAll() {
     return await RolRolOption.findAll();
   }
   async getByIdRolOption(idOptionRol: number) {
     return await RolRolOption.findOne({ where: { idOptionRol: idOptionRol } });
   }
-  async getByIdRol(idRol: number) {
-    return await RolRolOption.findByPk(idRol);
+  async findById(id: number) {
+    return await RolRolOption.findByPk(id);
   }
-
   async update(id: number, RolRolOptionData: any) {
     const rolroloption = await RolRolOption.findByPk(id);
     if (rolroloption) {

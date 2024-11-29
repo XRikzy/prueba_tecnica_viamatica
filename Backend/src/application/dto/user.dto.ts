@@ -10,7 +10,7 @@ export class CreateUserDTO {
   @IsString()
   sessionActive!: string;
   @IsNumber()
-  roleId!: number;
+  idPerson2!: number;
   @IsString()
   status!: "active" | "blocked";
 }

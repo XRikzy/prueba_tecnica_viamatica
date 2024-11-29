@@ -1,19 +1,15 @@
-import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDate, IsOptional, IsString } from "class-validator";
 
 export class CreatePersonDTO {
   @IsString()
-  names!: string;
+  firstName!: string;
 
   @IsString()
-  lastnames!: string;
-
+  lastName!: string;
   @IsString()
-  identification?: string;
-
+  identification!: string;
   @IsDate()
-  borndate!: Date;
-  @IsNumber()
-  userId!: number;
+  BornDate!: Date;
 }
 
 export class UpdatePersonDTO {
@@ -26,5 +22,5 @@ export class UpdatePersonDTO {
   lastName?: string;
 
   @IsString()
-  Identification?: string;
+  Identification!: string;
 }

@@ -15,15 +15,7 @@ export class RolOptionControllers {
       console.log(error)
     }
   }
-  async createManyRolOption(req: Request, res: Response) {
-    try {
-      const roloption = await this.RolOptionService.createManyRolOption(req.body);
-      res.status(201).json(roloption);
-    } catch (error) {
-      res.status(500).json({ error: "Error creando las opciones de rol" });
-      console.log(error)
-    }
-  }
+
   async getAllRolOption(req: Request, res: Response) {
     try {
       const roloption = await this.RolOptionService.getAllRolOption();
@@ -66,14 +58,9 @@ export class RolOptionControllers {
 
   async deleteRolOption(req: Request, res: Response) {
     try {
-      const result = await this.RolOptionService.deleteRolOption(
+       await this.RolOptionService.deleteRolOption(
         parseInt(req.params.id)
       );
-      if (result) {
-        res.status(200).json({ message: "RolOptiona eliminada" });
-      } else {
-        res.status(404).json({ message: "RolOptiona no encontrado" });
-      }
     } catch (error) {
       res.status(500).json({ error: "Error eliminando a la RolOptiona" });
     }

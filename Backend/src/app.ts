@@ -7,7 +7,10 @@ import rolRoutes from "./interfaces/routes/rol.routes";
 import rolOptionRoutes from "./interfaces/routes/roloption.routes";
 import rolrolOptionRoutes from "./interfaces/routes/rolroloption.routes";
 import rolUserRoutes from "./interfaces/routes/roluser.routes";
-import 'reflect-metadata';
+import "reflect-metadata";
+import sessionsRoutes from "./interfaces/routes/session.routes";
+import authRouter from "./interfaces/routes/auth.routes";
+import adminRouter from "./interfaces/routes/admin.routes";
 
 class App {
   private app: Express;
@@ -18,7 +21,17 @@ class App {
     this.port = port;
     this.app.use(express.json());
     this.app.use(cors());
-    this.app.use("/api", userRoutes, personRoutes, rolRoutes, rolOptionRoutes, rolrolOptionRoutes, rolUserRoutes);
+    this.app.use(
+      "/api",
+      userRoutes,
+      personRoutes,
+      rolRoutes,
+      rolOptionRoutes,
+      rolrolOptionRoutes,
+      rolUserRoutes,
+      sessionsRoutes,
+      authRouter,
+    );
   }
   private async authenticateDatabase() {
     try {
@@ -31,7 +44,6 @@ class App {
   }
   public async start() {
     await this.authenticateDatabase();
-
     this.app.listen(this.port, () => {
       console.table(` ✅ 🏹 Server is running on port ${this.port} 🏹 ✅`);
     });

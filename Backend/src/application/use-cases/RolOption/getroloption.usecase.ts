@@ -1,19 +1,21 @@
-import { Person } from "../../../config/model/person.model";
-import { PersonRepository } from "../../../domain/repositories/person.repository";
+import { RolOption } from "../../../config/model/roloptions.model";
+import { RolOptionRepository } from "../../../domain/repositories/roloption.repository";
 
+export class GetRolOptionUseCase {
+  private RolOptionRepository: RolOptionRepository;
 
-export class GetPersonUseCase {
-  private PersonRepository: PersonRepository;
-
-  constructor(PersonRepository: PersonRepository) {
-    this.PersonRepository = PersonRepository;
+  constructor(RolOptionRepository: RolOptionRepository) {
+    this.RolOptionRepository = RolOptionRepository;
   }
 
-  async execute(id: number): Promise<Person | null> {
-    return this.PersonRepository.findById(id);
+  async execute(id: number): Promise<RolOption | null> {
+    return this.RolOptionRepository.findById(id);
   }
 
-  async getAll(): Promise<Person[]> {
-    return this.PersonRepository.findAll();
+  async getAll(): Promise<RolOption[]> {
+    return this.RolOptionRepository.findAll();
+  }
+  async getRolOptionByName(name: string): Promise<RolOption | null> {
+    return this.RolOptionRepository.getByRolOptionName(name);
   }
 }
