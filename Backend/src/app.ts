@@ -10,7 +10,6 @@ import rolUserRoutes from "./interfaces/routes/roluser.routes";
 import "reflect-metadata";
 import sessionsRoutes from "./interfaces/routes/session.routes";
 import authRouter from "./interfaces/routes/auth.routes";
-import adminRouter from "./interfaces/routes/admin.routes";
 
 class App {
   private app: Express;

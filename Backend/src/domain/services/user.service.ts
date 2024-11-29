@@ -9,6 +9,7 @@ import {
 import { CreatePersonDTO } from "../../application/dto/person.dto";
 import { GenerateUserUseCase } from "../../application/use-cases/User/generateuser.usecase";
 import { PersonRepository } from "../repositories/person.repository";
+import { UnlockUserUseCase } from "../../application/use-cases/User/unlockuser.usecase";
 
 export class UserService {
   private userRepository = new UserRepository();
@@ -17,6 +18,7 @@ export class UserService {
   private updateUserUseCase = new UpdateUserUseCase(this.userRepository);
   private deleteUserUseCase = new DeleteUserUseCase(this.userRepository);
   private generateUserUseCase = new GenerateUserUseCase();
+  private unlockedUserUserCase = new UnlockUserUseCase(this.userRepository)
 
   async createUser(data: CreateUserDTO) {
     return this.createUserUseCase.execute(data);
@@ -39,5 +41,8 @@ export class UserService {
 
   async deleteUser(id: number) {
     return await this.deleteUserUseCase.execute(id);
+  }
+  async unlockedUser (id: number){
+    return await this.unlockedUserUserCase.execute(id)
   }
 }

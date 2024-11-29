@@ -35,7 +35,4 @@ RolRolOption.init(
   }
 );
 
-Rol.belongsToMany(RolOption, { through: RolRolOption });
-RolOption.belongsToMany(Rol, { through: RolRolOption });
-
 export { RolRolOption };

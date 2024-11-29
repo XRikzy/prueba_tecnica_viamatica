@@ -1,11 +1,6 @@
 import { User } from "../../../config/model/user.model";
 import { PersonRepository } from "../../../domain/repositories/person.repository";
-import {
-  EmailAlreadyExistsError,
-  InvalidPasswordError,
-  InvalidUsernameCharactersError,
-  UsernameAlreadyExistsError,
-} from "../../../utils/validationerros.utils";
+import { EmailAlreadyExistsError, InvalidPasswordError, InvalidUsernameCharactersError, UserAlreadyExistsError, UsernameAlreadyExistsError } from "../../../utils/apperros.utils";
 import {
   generateEmail,
   validatePassword,
@@ -26,26 +21,33 @@ export class GenerateUserUseCase {
     if (existingUserByUsername) {
       throw new UsernameAlreadyExistsError("El nombre de usuario ya existe.");
     }
+    const existingUser = await User.findOne({
+      where: { idPerson2: data.idPerson2 },
+    });
+
+    if (existingUser) {
+      throw new UserAlreadyExistsError('Ya existe un usuario asociado con esta persona.');
+    }
     let email = generateEmail(person.firstName, person.lastName);
-    let existingUser = await User.findOne({ where: { mail: email } });
+    let userWithEmail  = await User.findOne({ where: { mail: email } });
     let count = 1;
 
     const maxAttempts = 2;
-    while (existingUser && count <= maxAttempts) {
+    while (userWithEmail  && count <= maxAttempts) {
       email = generateEmail(person.firstName, person.lastName, count);
-      existingUser = await User.findOne({ where: { mail: email } });
+      userWithEmail  = await User.findOne({ where: { mail: email } });
       count++;
     }
-    if (existingUser) {
+    if (userWithEmail ) {
       throw new EmailAlreadyExistsError("No se pudo generar un correo único.");
     }
 
     if (!/^[A-Za-z0-9]+$/.test(data.username)) {
-      throw new InvalidUsernameCharactersError();
+      throw new InvalidUsernameCharactersError("Nombre de usuario invalido, prueba cambiarlo");
     }
 
     if (!validatePassword(data.password)) {
-      throw new InvalidPasswordError();
+      throw new InvalidPasswordError("Contraseña invalida, recuerda agregar 1 signo, 1 mayuscula y 1 numero");
     }
 
     const user = await User.create({
@@ -56,9 +58,6 @@ export class GenerateUserUseCase {
       idPerson2: person.idPerson,
       status: "active",
     });
-
-    console.log('Usuario creado:', user);
-
     return user;
   }
 }

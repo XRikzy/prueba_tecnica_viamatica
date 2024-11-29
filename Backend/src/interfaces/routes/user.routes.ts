@@ -18,5 +18,8 @@ userRoutes.delete("/users/:id", (req, res) =>
 userRoutes.post("/users/create", (req, res) =>
   userController.generateUser(req, res)
 );
+userRoutes.patch("/unlock/:userId", (req, res) =>
+  userController.unLockedUser(req, res)
+);
 
 export default userRoutes;

@@ -9,7 +9,8 @@ export class User extends Model {
   public mail!: string;
   public sessionActive!: string;
   public idPerson2!: number;
-  public status!: 'active' | 'blocked';
+  public status!: "active" | "blocked";
+  public failedAttempts!: number;
 }
 
 User.init(
@@ -34,7 +35,7 @@ User.init(
     SessionActive: {
       type: DataTypes.CHAR(1),
       allowNull: false,
-      defaultValue: 'Y',
+      defaultValue: "Y",
     },
     idPerson2: {
       type: DataTypes.INTEGER,
@@ -43,15 +44,19 @@ User.init(
         key: "idPerson",
       },
     },
+    failedAttempts: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     status: {
-      type: DataTypes.ENUM('active', 'blocked'),
-      defaultValue: 'active',
+      type: DataTypes.ENUM("active", "blocked"),
+      defaultValue: "active",
     },
   },
   {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: "User",
+    tableName: "users",
     timestamps: true,
   }
 );

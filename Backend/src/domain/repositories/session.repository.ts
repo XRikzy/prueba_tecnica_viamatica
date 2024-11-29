@@ -11,8 +11,8 @@ export class SessionsRepository {
   async findAll() {
     return await Sessions.findAll();
   }
-  async getSessionsByIdUser(idUser: number) {
-    return await Sessions.findOne({ where: { idUser } });
+  async getSessionsByIdUser(user_idUser: number) {
+    return await Sessions.findOne({ where: { user_idUser } });
   }
   async findById(id: number) {
     return await Sessions.findByPk(id);

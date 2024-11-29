@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { User } from "../../config/model/user.model";
+import { UserNotFound } from "../../utils/apperros.utils";
 
 export class UserRepository {
   async findAll(): Promise<User[]> {
@@ -44,12 +45,11 @@ export class UserRepository {
       await user.increment('failedAttempts');
     }
   } 
-   async resetFailedAttempts(userId: number): Promise<void> {
-    await User.update({ failedAttempts: 0 }, { where: { idUser: userId } });
+   async unlockUser(userId: number): Promise<void> {
+    await User.update({ failedAttempts: 0, status: 'active' }, { where: { idUser: userId } });
   }
 
   async blockUser(userId: number): Promise<void> {
     await User.update({ status: 'blocked' }, { where: { idUser: userId } });
   }
-
 }

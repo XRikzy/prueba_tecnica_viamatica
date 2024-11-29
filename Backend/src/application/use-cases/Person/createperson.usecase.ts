@@ -1,6 +1,6 @@
 import { Person } from "../../../config/model/person.model";
 import { PersonRepository } from "../../../domain/repositories/person.repository";
-import { ConsecutiveNumbersInIdentificationError, InvalidIdentificationError } from "../../../utils/validationerros.utils";
+import { ConsecutiveNumbersInIdentificationError, InvalidIdentificationError } from "../../../utils/apperros.utils";
 import { validateIdentification } from "../../../utils/validators.utils";
 import { CreatePersonDTO } from "../../dto/person.dto";
 
