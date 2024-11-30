@@ -1,8 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../infrastructure/database/databaseconfig"; // Asegúrate de tener la conexión de Sequelize
-import { Rol } from "./rol.model";
-import { RolRolOption } from "./rolroloption.model";
-
+import { sequelize } from "../../infrastructure/database/databaseconfig";
 class RolOption extends Model {
   public idOption!: number;
   public NameOption!: string;
