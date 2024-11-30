@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { User } from "../../config/model/user.model";
+import { sequelize } from "../../infrastructure/database/databaseconfig";
 
 export class UserRepository {
   async findAll(): Promise<User[]> {
@@ -19,7 +20,10 @@ export class UserRepository {
   async update(id: number, user: Partial<User>): Promise<[number, User[]]> {
     return User.update(user, { where: { id }, returning: true });
   }
-
+  async getUserStatusCounts() {
+    const [results] = await sequelize.query('SELECT * FROM count_user_status_and_failed_attempts()');
+    return results;
+  }
   async delete(id: number) {
     const user = await User.findByPk(id);
     if (user) {

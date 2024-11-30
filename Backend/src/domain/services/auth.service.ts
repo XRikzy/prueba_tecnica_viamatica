@@ -18,14 +18,15 @@ export class AuthService {
     if (user.status === 'blocked') {
       throw new UserBlocked("El usuario esta bloqueado");
     }
-    // if (password === user.password) {
-    //   await this.userRepository.incrementFailedAttempts(user.idUser);
-    //   if (user.failedAttempts + 1 >= 3) {
-    //     await this.userRepository.blockUser(user.idUser);
-    //     throw new UserBlocked('Usuario Bloqueado por sobrepasar el numero de intentos');
-    //   }
-    //   throw new InvalidPasswordAdding('La contraseña es incorrecta');
-    // }
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      await this.userRepository.incrementFailedAttempts(user.idUser);
+      if (user.failedAttempts + 1 >= 3) {
+        await this.userRepository.blockUser(user.idUser);
+        throw new UserBlocked('Usuario Bloqueado por sobrepasar el numero de intentos');
+      }
+      throw new InvalidPasswordAdding('La contraseña es incorrecta');
+    }
     const activeSession = await this.sessionsRepository.getCloseSessionByUser(user.idUser);
     if (activeSession) {
       throw new UserAlreadySession('El usuario ya tiene una sesión activa.');
@@ -49,5 +50,8 @@ export class AuthService {
     }
     await this.sessionsRepository.closeSession(userId);
     await this.userRepository.setSessionActive(userId, 'N');
+  }
+  async getUserStatusMetrics() {
+    return await this.userRepository.getUserStatusCounts();
   }
 }

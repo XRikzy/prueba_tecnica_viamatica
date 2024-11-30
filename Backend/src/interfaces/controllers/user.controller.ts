@@ -93,7 +93,12 @@ export class UsersControllers {
       );
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).json({ error: "Error actualizando el usuario" });
+      if (error instanceof AppError) {
+        res.status(error.statusCode).json({ message: error.message });
+      } else {
+        console.error('Unexpected error:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+      }
     }
   }
 

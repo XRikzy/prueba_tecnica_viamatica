@@ -25,7 +25,7 @@ User.init(
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(120),
       allowNull: false,
     },
     mail: {
@@ -49,7 +49,7 @@ User.init(
       defaultValue: 0,
     },
     status: {
-      type: DataTypes.ENUM("active", "blocked"),
+      type: DataTypes.ENUM("active", "blocked", "inactive"),
       defaultValue: "active",
     },
   },

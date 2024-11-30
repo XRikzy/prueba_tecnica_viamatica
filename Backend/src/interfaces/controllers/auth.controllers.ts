@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../../domain/services/auth.service';
 import { AppError } from '../../utils/errors/AppErrors.utils';
 declare global {
@@ -40,6 +40,14 @@ export class AuthController {
           console.error('Unexpected error:', error);
           res.status(500).json({ message: 'Error interno del servidor' });
         }
+      }
+    }
+    public async getUserMetrics(req: Request, res: Response, next: NextFunction) {
+      try {
+        const metrics = await this.authService.getUserStatusMetrics();
+        res.status(200).json(metrics);
+      } catch (error) {
+        next(error);
       }
     }
   }
