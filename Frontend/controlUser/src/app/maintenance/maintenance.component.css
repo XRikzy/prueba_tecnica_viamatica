@@ -1,4 +1,4 @@
-/* Sidebar Estilo */
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -64,20 +64,19 @@
     border-color: #29b6f6;
     outline: none;
   }
-  
-  /* Carga masiva */
+
   .bulk-upload input {
-    font-size: 0.875rem; /* Reducir el tamaño de la fuente */
+    font-size: 0.875rem; 
     padding: 8px;
-    width: 200px; /* Ancho más pequeño */
+    width: 200px; 
   }
   
-  /* Formulario de actualización */
+
   .user-update-form input, 
   .user-update-form select {
-    width: 100%; /* Mantener el 100% para los campos de formulario */
-    padding: 8px; /* Reducir padding */
-    font-size: 0.875rem; /* Reducir tamaño de fuente */
+    width: 100%; 
+    padding: 8px;
+    font-size: 0.875rem;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -133,7 +132,7 @@
       margin-left: 0;
       padding: 20px;
       width: 100%;
-      max-width: 600px; /* Limitar el ancho en pantallas pequeñas */
+      max-width: 600px;
     }
   
     .filters {
