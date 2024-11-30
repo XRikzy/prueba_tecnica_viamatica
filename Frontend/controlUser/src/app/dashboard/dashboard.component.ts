@@ -21,7 +21,7 @@ export class DashboardComponent {
     }
   }
   ngOnInit(): void {
-    this.loadMetrics();  // Llama al método aquí
+    this.loadMetrics();
   }
 
   async logout() {
