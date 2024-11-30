@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
-
-import { UserService } from "../../domain/services/user.service";
 import { PersonService } from "../../domain/services/person.service";
 
 export class PersonControllers {
   private personService: PersonService;
-  private userService: UserService;
   constructor(personService: PersonService) {
     this.personService = personService;
-    this.userService = new UserService();
   }
   async createPerson(req: Request, res: Response) {
     try {
