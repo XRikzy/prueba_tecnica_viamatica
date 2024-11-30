@@ -10,7 +10,7 @@ export class UserService {
 
   constructor() {}
 
-  // Obtener todos los usuarios
+ 
   async getUsers() {
     return axios.get(this.apiUrl)
       .then(response => response.data)
@@ -20,7 +20,6 @@ export class UserService {
       });
   }
 
-  // Subir archivo de usuarios
   async uploadUsers(file: File) {
     const formData = new FormData();
     formData.append('file', file, file.name);
@@ -33,7 +32,6 @@ export class UserService {
       });
   }
 
-  // Actualizar datos de usuario
   async updateUser(userId: number, userData: any) {
     return axios.put(`${this.apiUrl}/${userId}`, userData)
       .then(response => response.data)

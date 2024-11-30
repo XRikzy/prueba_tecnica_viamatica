@@ -17,7 +17,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #00c6ff, #0072ff); /* Degradado atractivo */
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
     padding: 10px 20px;
     color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -47,7 +47,7 @@
   .nav-links a:hover, .nav-links a.active {
     text-decoration: underline;
     font-weight: bold;
-    color: #ffd700; /* Color dorado */
+    color: #ffd700; 
   }
   
   .navbar-end {

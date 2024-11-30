@@ -45,7 +45,7 @@ export class MaintenanceComponent implements OnInit {
     this.userService.searchUsers(this.searchQuery)
       .then(data => {
         console.log('Usuarios encontrados:', data);
-        this.users = data;  // Suponiendo que 'data' es una lista de usuarios.
+        this.users = data;
       })
       .catch(error => {
         console.error('Error al buscar usuarios:', error);
@@ -65,7 +65,7 @@ export class MaintenanceComponent implements OnInit {
 
   updateUser(): void {
     if (this.userForm?.valid) {
-      const userId = this.users.idUser;  // Deberías usar el id del usuario correcto.
+      const userId = this.users.idUser;
       const userData = this.userForm.value;
       this.userService.updateUser(userId, userData)
         .then(response => {
